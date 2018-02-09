@@ -1,7 +1,9 @@
 #include "AnimationReader.hpp"
 
+const std::string AnimationReader::kPrefix = "res/animations/";
+
 void AnimationReader::read(Animation& animation, const std::string& filename) {
-  std::ifstream file(filename);
+  std::ifstream file(kPrefix + filename);
 
   if (file.is_open()) {
     read(animation, file);

@@ -1,7 +1,9 @@
 #include "AnimatedSpriteReader.hpp"
 
+const std::string AnimatedSpriteReader::kPrefix = "res/animations/";
+
 void AnimatedSpriteReader::read(AnimatedSprite& sprite, const std::string& filename) {
-  std::ifstream file(filename);
+  std::ifstream file(kPrefix + filename);
 
   if (file.is_open()) {
     read(sprite, file);

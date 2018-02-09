@@ -7,8 +7,13 @@ SceneTest::~SceneTest() {}
 void SceneTest::init() {
   Scene::init();
 
-  mTilemap.loadFromFile("res/tilemaps/0.map");
+  mTilemap.loadFromFile("0.map");
   mCharacter.init();
+  mCharacter.loadFromFile("scientist.char");
+
+  CharacterBehavior* behavior = CharacterBehavior::create(CharacterBehavior::Player, &mCharacter);
+  behavior->init();
+  mCharacter.setBehavior(behavior);
 
   getInput().addKeyboardBinding(sf::Keyboard::Left, Input::Left);
   getInput().addKeyboardBinding(sf::Keyboard::Right, Input::Right);
@@ -30,6 +35,10 @@ void SceneTest::event(const sf::Event& event) {
 void SceneTest::update(const sf::Time& deltatime) {
   Scene::update(deltatime);
 
+  Direction direction = mCharacter.getNextDirection();
+  if (direction != NUM_DIRS && canMoveTowards(mCharacter, direction))
+    mCharacter.moveTowards(direction);
+
   mCharacter.update(deltatime);
 }
 
@@ -42,4 +51,11 @@ void SceneTest::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 
 void SceneTest::end() {
   Scene::end();
+}
+
+bool SceneTest::canMoveTowards(const Character& character, Direction direction) const {
+  sf::Vector2i position = character.getPositionInTiles();
+  position += dir2vec<int>(direction);
+
+  return character.isIdle() && mTilemap.getPermission(position.x, position.y) == 0;
 }

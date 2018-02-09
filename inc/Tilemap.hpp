@@ -13,10 +13,12 @@ public:
   void loadFromFile(const std::string& filename);
 
   void setTile(unsigned int x, unsigned int y, unsigned int value);
+  void setPermission(unsigned int x, unsigned int y, unsigned int value);
 
   unsigned int getWidth() const;
   unsigned int getHeight() const;
-  unsigned int getValue(unsigned int x, unsigned int y) const;
+  unsigned int getTile(unsigned int x, unsigned int y) const;
+  unsigned int getPermission(unsigned int x, unsigned int y) const;
 
   bool outOfBounds(unsigned int x, unsigned int y) const;
 
@@ -32,6 +34,7 @@ private:
   unsigned int mHeight;
 
   std::vector<std::vector<unsigned int>> mMap;
+  std::vector<std::vector<unsigned int>> mPermissions;
 
   Tilesheet mTilesheet;
 };

@@ -9,6 +9,7 @@ void Tilemap::create(unsigned int width, unsigned int height) {
   mHeight = height;
 
   mMap = std::vector<std::vector<unsigned int>> (height, std::vector<unsigned int>(width));
+  mPermissions = std::vector<std::vector<unsigned int>> (height, std::vector<unsigned int>(width));
 }
 
 void Tilemap::loadFromFile(const std::string& filename) {
@@ -20,12 +21,22 @@ void Tilemap::setTile(unsigned int x, unsigned int y, unsigned int value) {
     mMap[y][x] = value;
 }
 
+void Tilemap::setPermission(unsigned int x, unsigned int y, unsigned int value) {
+  if (!outOfBounds(x, y))
+    mPermissions[y][x] = value;
+}
+
 unsigned int Tilemap::getWidth() const { return mWidth; }
 unsigned int Tilemap::getHeight() const { return mHeight; }
 
-unsigned int Tilemap::getValue(unsigned int x, unsigned int y) const {
+unsigned int Tilemap::getTile(unsigned int x, unsigned int y) const {
   if (outOfBounds(x, y)) return 0;
   return mMap[y][x];
+}
+
+unsigned int Tilemap::getPermission(unsigned int x, unsigned int y) const {
+  if (outOfBounds(x, y)) return 0;
+  return mPermissions[y][x];
 }
 
 bool Tilemap::outOfBounds(unsigned int x, unsigned int y) const {
@@ -64,7 +75,7 @@ void Tilemap::draw(sf::RenderTarget& window, sf::RenderStates states) const {
   sf::IntRect rect;
   for (unsigned int i = 0; i < mHeight; ++i) {
     for (unsigned int j = 0; j < mWidth; ++j) {
-      value = getValue(j, i);
+      value = getTile(j, i);
       position = tile2pixel({(int)j, (int)i});
       rect = mTilesheet.getTileRect(value);
 

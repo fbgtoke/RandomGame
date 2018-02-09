@@ -4,6 +4,7 @@
 #include "Scene.hpp"
 #include "Tilemap.hpp"
 #include "Character.hpp"
+#include "CharacterBehavior.hpp"
 
 class SceneTest : public Scene {
 public:
@@ -19,6 +20,8 @@ public:
 private:
   Tilemap mTilemap;
   Character mCharacter;
+
+  bool canMoveTowards(const Character& character, Direction direction) const;
 };
 
 #endif // _SCENE_TEST_INCLUDE

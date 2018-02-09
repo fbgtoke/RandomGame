@@ -46,6 +46,6 @@ const sf::Vector2<T> v[] = {
 };
 
 template <class T>
-sf::Vector2<T> dir2vec(Direction dir) { return v<float>[dir]; };
+sf::Vector2<T> dir2vec(Direction dir) { return v<T>[dir]; };
 
 #endif // _UTILS_HPP

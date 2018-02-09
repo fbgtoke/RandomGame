@@ -1,11 +1,14 @@
-tilesheet-pokemon.png
-16
-8
-0 0
-0 0
+tilesheet
+texture tilesheet-pokemon.png
+tileSize 16
+tilesPerRow 8
+tileOffset 0 0
+tileMargin 0 0
+end
 
+size 10 10
 
-10 10
+tiles
 0 0 0 0 0 0 0 0 0 0
 1 1 1 1 1 1 1 1 1 1
 2 2 2 2 2 2 2 2 2 2
@@ -16,3 +19,15 @@ tilesheet-pokemon.png
 7 7 7 7 7 7 7 7 7 7
 8 8 8 8 8 8 8 8 8 8
 9 9 9 9 9 9 9 9 9 9
+
+permissions
+1 1 1 1 1 1 1 1 1 1
+1 0 0 0 0 0 0 0 0 1
+1 0 0 0 0 0 0 0 0 1
+1 0 0 0 0 0 0 0 0 1
+1 0 0 0 0 0 0 0 0 1
+1 0 0 0 0 0 0 0 0 1
+1 0 0 0 0 0 0 0 0 1
+1 0 0 0 0 0 0 0 0 1
+1 0 0 0 0 0 0 0 0 1
+1 1 1 1 1 1 1 1 1 1

@@ -11,6 +11,7 @@ public:
   static void read(AnimatedSprite& sprite, std::ifstream& stream);
 
 private:
+  static const std::string kPrefix;
   static void readAnimation(AnimatedSprite& sprite, std::ifstream& stream);
   static void readTexture(AnimatedSprite& sprite, const std::string& line);
 };

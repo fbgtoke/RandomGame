@@ -1,0 +1,13 @@
+animatedSprite character.anim
+texture scientist.png
+
+behavior 0
+
+tileSize  16.0
+threshold 0.25
+
+walkSpeed 20.0
+runSpeed  40.0
+
+position 1 1
+direction 0
