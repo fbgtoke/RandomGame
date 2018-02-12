@@ -13,6 +13,7 @@ public:
   void init() override;
   void update(const sf::Time& deltatime) override;
   void draw(sf::RenderTarget& window, sf::RenderStates states) const override;
+  void end() override;
 
   void setBehavior(CharacterBehavior* behavior);
 
@@ -27,6 +28,7 @@ public:
 
   Direction getNextDirection() const;
   AnimatedSprite& getSprite();
+  CharacterBehavior* getBehavior();
 
   void setRunning(bool run);
 

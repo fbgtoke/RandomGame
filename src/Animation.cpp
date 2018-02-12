@@ -41,7 +41,11 @@ void Animation::setPlay(bool play) { mPlay = play; }
 bool Animation::isPlaying() const { return mPlay && !hasEnded(); }
 bool Animation::hasEnded() const { return !mRepeat && (mCurrentFrame == mFrames.size() - 1); }
 
-sf::IntRect Animation::getCurrentFrame() const { return mFrames[mCurrentFrame]; }
+sf::IntRect Animation::getCurrentFrame() const {
+  if (mFrames.size() != 0)
+    return mFrames[mCurrentFrame];
+  return sf::IntRect(0, 0, 0, 0);
+}
 
 void Animation::nextFrame() {
   mCurrentFrame = (mCurrentFrame + 1)%mFrames.size();
@@ -52,5 +56,5 @@ void Animation::prevFrame() {
 }
 
 void Animation::loadFromFile(const std::string& filename) {
-  AnimationReader::read(*this, filename);
+  AnimationReader::read(this, filename);
 }

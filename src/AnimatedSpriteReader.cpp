@@ -2,7 +2,7 @@
 
 const std::string AnimatedSpriteReader::kPrefix = "res/animations/";
 
-void AnimatedSpriteReader::read(AnimatedSprite& sprite, const std::string& filename) {
+void AnimatedSpriteReader::read(AnimatedSprite* sprite, const std::string& filename) {
   std::ifstream file(kPrefix + filename);
 
   if (file.is_open()) {
@@ -13,7 +13,7 @@ void AnimatedSpriteReader::read(AnimatedSprite& sprite, const std::string& filen
   }
 }
 
-void AnimatedSpriteReader::read(AnimatedSprite& sprite, std::ifstream& stream) {
+void AnimatedSpriteReader::read(AnimatedSprite* sprite, std::ifstream& stream) {
   std::string line;
 
   while (getline(stream, line)) {
@@ -22,12 +22,12 @@ void AnimatedSpriteReader::read(AnimatedSprite& sprite, std::ifstream& stream) {
   }
 }
 
-void AnimatedSpriteReader::readAnimation(AnimatedSprite& sprite, std::ifstream& stream) {
-  sprite.addAnimation();
-  AnimationReader::read(sprite.getAnimation(sprite.getNumberOfAnimations()-1), stream);
+void AnimatedSpriteReader::readAnimation(AnimatedSprite* sprite, std::ifstream& stream) {
+  sprite->addAnimation();
+  AnimationReader::read(sprite->getAnimation(sprite->getNumberOfAnimations()-1), stream);
 }
 
-void AnimatedSpriteReader::readTexture(AnimatedSprite& sprite, const std::string& line) {
+void AnimatedSpriteReader::readTexture(AnimatedSprite* sprite, const std::string& line) {
   std::stringstream stream(line);
   std::string command;
   std::string textureName;
@@ -35,5 +35,5 @@ void AnimatedSpriteReader::readTexture(AnimatedSprite& sprite, const std::string
   stream >> command >> textureName;
 
   sf::Texture* texture = getResource().texture(textureName);
-  sprite.setTexture(*texture);
+  sprite->setTexture(*texture);
 }

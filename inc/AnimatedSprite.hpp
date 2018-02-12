@@ -9,7 +9,6 @@ public:
   AnimatedSprite();
   ~AnimatedSprite() override;
 
-  void init() override;
   void event(const sf::Event& event) override;
   void update(const sf::Time& deltatime) override;
   void draw(sf::RenderTarget& window, sf::RenderStates states) const override;
@@ -18,8 +17,8 @@ public:
   void setNumberOfAnimations(unsigned int numAnimations);
   void addAnimation();
   void changeAnimation(unsigned int index);
-  Animation& getAnimation(unsigned int index);
-  Animation& getCurrentAnimation();
+  Animation* getAnimation(unsigned int index);
+  Animation* getCurrentAnimation();
 
   unsigned int getNumberOfAnimations() const;
 
@@ -27,7 +26,7 @@ public:
 
 private:
   int mCurrentAnimation;
-  std::vector<Animation> mAnimations;
+  std::vector<Animation*> mAnimations;
 };
 
 #endif // _ANIMATED_SPRITE_HPP

@@ -10,6 +10,7 @@ public:
   ~CharacterBehaviorPlayer() override;
 
   void init() override;
+  void end() override;
 };
 
 #endif // _CHARACTER_BEHAVIOR_PLAYER_HPP

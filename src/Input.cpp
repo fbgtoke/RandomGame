@@ -1,4 +1,6 @@
 #include "Input.hpp"
+#include "InputReader.hpp"
+#include "GameObject.hpp"
 
 Input::Input() {}
 
@@ -45,12 +47,32 @@ void Input::addJoystickBinding(unsigned int key, Button button) {
   mJoystickBindings[key] = button;
 }
 
-void Input::addOnPressedListener(Button button, std::function<void(void)> callback) {
-  mOnPressed[button].push_back(callback);
+void Input::addOnPressedListener(Button button, Listener listener) {
+  mOnPressed[button].push_back(listener);
 }
 
-void Input::addOnReleasedListener(Button button, std::function<void(void)> callback) {
-  mOnReleased[button].push_back(callback);
+void Input::addOnReleasedListener(Button button, Listener listener) {
+  mOnReleased[button].push_back(listener);
+}
+
+void Input::removeOnPressedListener(Button button, GameObject* object) {
+  auto it = mOnPressed[button].begin();
+  while (it != mOnPressed[button].end()) {
+    if (it->listener == object)
+      mOnPressed[button].erase(it++);
+    else
+      it++;
+  }
+}
+
+void Input::removeOnReleasedListener(Button button, GameObject* object) {
+  auto it = mOnReleased[button].begin();
+  while (it != mOnReleased[button].end()) {
+    if (it->listener == object)
+      mOnReleased[button].erase(it++);
+    else
+      it++;
+  }
 }
 
 Input::Button Input::keyboard2button(sf::Keyboard::Key key) const {
@@ -67,16 +89,20 @@ Input::Button Input::joystick2button(unsigned int key) const {
 
 void Input::triggerOnPressed(Button button) {
   if (button != NO_BUTTON) {
-    for (std::function<void(void)> callback : mOnPressed[button]) {
-      callback();
+    for (Listener& listener : mOnPressed[button]) {
+      listener.callback();
     }
   }
 }
 
 void Input::triggerOnReleased(Button button) {
   if (button != NO_BUTTON) {
-    for (std::function<void(void)> callback : mOnReleased[button]) {
-      callback();
+    for (Listener& listener : mOnReleased[button]) {
+      listener.callback();
     }
   }
+}
+
+void Input::loadFromFile(const std::string& filename) {
+  InputReader::read(*this, filename);
 }

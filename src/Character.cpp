@@ -1,19 +1,9 @@
 #include "Character.hpp"
 #include "CharacterReader.hpp"
 
-Character::Character() : mBehavior(nullptr) {}
-
-Character::~Character() {}
-
-void Character::init() {
-  GameObject::init();
-
+Character::Character() : mBehavior(nullptr) {
   mState = Idle;
   mDirection = Down;
-
-  mSprite.init();
-  mSprite.loadFromFile("character.anim");
-  mSprite.changeAnimation(mState);
 
   mRunning = false;
 
@@ -25,14 +15,30 @@ void Character::init() {
   mThreshold = 0.25f;
 }
 
+Character::~Character() {
+  if (mBehavior != nullptr)
+    delete mBehavior;
+}
+
+void Character::init() {
+  GameObject::init();
+
+  mSprite.init();
+
+  if (mBehavior != nullptr)
+    mBehavior->init();
+}
+
 void Character::update(const sf::Time& deltatime) {
   GameObject::update(deltatime);
 
-  if (mState == Idle) {
-    mSprite.getCurrentAnimation().stop();
+  Animation* currentAnimation = mSprite.getCurrentAnimation();
 
-  } else {
-    mSprite.getCurrentAnimation().play();
+  if (mState == Idle && currentAnimation != nullptr) {
+    currentAnimation->stop();
+
+  } else if (currentAnimation != nullptr) {
+    currentAnimation->play();
 
     sf::Vector2f dir = mTargetPosition - mSprite.getPosition();
     dir = normalize(dir) * (float)deltatime.asSeconds();
@@ -59,6 +65,13 @@ void Character::draw(sf::RenderTarget& window, sf::RenderStates states) const {
   mSprite.draw(window, states);
 }
 
+void Character::end() {
+  GameObject::end();
+
+  if (mBehavior != nullptr)
+    mBehavior->end();
+}
+
 void Character::setBehavior(CharacterBehavior* behavior) { mBehavior = behavior; }
 
 void Character::moveTowards(Direction dir) {
@@ -80,6 +93,8 @@ void Character::setNextDirection(Direction dir) { mNextDirection = dir; }
 Direction Character::getNextDirection() const { return mNextDirection; }
 
 AnimatedSprite& Character::getSprite() { return mSprite; }
+
+CharacterBehavior* Character::getBehavior() { return mBehavior; }
 
 void Character::setRunning(bool run) { mRunning = run; }
 

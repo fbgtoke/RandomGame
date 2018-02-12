@@ -2,7 +2,7 @@
 
 const std::string AnimationReader::kPrefix = "res/animations/";
 
-void AnimationReader::read(Animation& animation, const std::string& filename) {
+void AnimationReader::read(Animation* animation, const std::string& filename) {
   std::ifstream file(kPrefix + filename);
 
   if (file.is_open()) {
@@ -13,7 +13,7 @@ void AnimationReader::read(Animation& animation, const std::string& filename) {
   }
 }
 
-void AnimationReader::read(Animation& animation, std::ifstream& stream) {
+void AnimationReader::read(Animation* animation, std::ifstream& stream) {
   std::string line;
 
   while (getline(stream, line)) {
@@ -25,38 +25,38 @@ void AnimationReader::read(Animation& animation, std::ifstream& stream) {
   }
 }
 
-void AnimationReader::readFrame(Animation& animation, const std::string& line) {
+void AnimationReader::readFrame(Animation* animation, const std::string& line) {
   std::stringstream stream(line);
   std::string command;
   sf::IntRect rect;
 
   stream >> command >> rect.left >> rect.top >> rect.width >> rect.height;
-  animation.addFrame(rect);
+  animation->addFrame(rect);
 }
 
-void AnimationReader::readTimePerFrame(Animation& animation, const std::string& line) {
+void AnimationReader::readTimePerFrame(Animation* animation, const std::string& line) {
   std::stringstream stream(line);
   std::string command;
   float seconds;
 
   stream >> command >> seconds;
-  animation.setTimePerFrame(sf::seconds(seconds));
+  animation->setTimePerFrame(sf::seconds(seconds));
 }
 
-void AnimationReader::readRepeat(Animation& animation, const std::string& line) {
+void AnimationReader::readRepeat(Animation* animation, const std::string& line) {
   std::stringstream stream(line);
   std::string command;
   bool repeat;
 
   stream >> command >> repeat;
-  animation.setRepeat(repeat);
+  animation->setRepeat(repeat);
 }
 
-void AnimationReader::readPlay(Animation& animation, const std::string& line) {
+void AnimationReader::readPlay(Animation* animation, const std::string& line) {
   std::stringstream stream(line);
   std::string command;
   bool play;
 
   stream >> command >> play;
-  animation.setPlay(play);
+  animation->setPlay(play);
 }

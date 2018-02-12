@@ -6,22 +6,12 @@ SceneTest::~SceneTest() {}
 
 void SceneTest::init() {
   Scene::init();
+  getInput().loadFromFile("default.input");
 
   mTilemap.loadFromFile("0.map");
-  mCharacter.init();
+
   mCharacter.loadFromFile("scientist.char");
-
-  CharacterBehavior* behavior = CharacterBehavior::create(CharacterBehavior::Player, &mCharacter);
-  behavior->init();
-  mCharacter.setBehavior(behavior);
-
-  getInput().addKeyboardBinding(sf::Keyboard::Left, Input::Left);
-  getInput().addKeyboardBinding(sf::Keyboard::Right, Input::Right);
-  getInput().addKeyboardBinding(sf::Keyboard::Up, Input::Up);
-  getInput().addKeyboardBinding(sf::Keyboard::Down, Input::Down);
-
-  getInput().addKeyboardBinding(sf::Keyboard::X, Input::Cancel);
-  getInput().addKeyboardBinding(sf::Keyboard::Space, Input::Cancel);
+  mCharacter.init();
 }
 
 void SceneTest::event(const sf::Event& event) {
@@ -51,6 +41,8 @@ void SceneTest::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 
 void SceneTest::end() {
   Scene::end();
+
+  mCharacter.end();
 }
 
 bool SceneTest::canMoveTowards(const Character& character, Direction direction) const {
