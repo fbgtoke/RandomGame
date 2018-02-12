@@ -21,9 +21,17 @@ void Tilemap::setTile(unsigned int x, unsigned int y, unsigned int value) {
     mMap[y][x] = value;
 }
 
+void Tilemap::setTiles(const std::vector<std::vector<unsigned int>>& tiles) {
+  mMap = tiles;
+}
+
 void Tilemap::setPermission(unsigned int x, unsigned int y, unsigned int value) {
   if (!outOfBounds(x, y))
     mPermissions[y][x] = value;
+}
+
+void Tilemap::setPermissions(const std::vector<std::vector<unsigned int>>& permissions) {
+  mPermissions = permissions;
 }
 
 unsigned int Tilemap::getWidth() const { return mWidth; }

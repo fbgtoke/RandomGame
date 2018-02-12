@@ -13,7 +13,9 @@ public:
   void setTileSize(unsigned int tileSize);
   void setTilesPerRow(unsigned int tilesPerRow);
   void setTileOffset(const sf::Vector2i& offset);
+  void setTileOffset(int x, int y);
   void setTileMargin(const sf::Vector2i& margin);
+  void setTileMargin(int x, int y);
 
   const sf::Texture* getTexture() const;
 

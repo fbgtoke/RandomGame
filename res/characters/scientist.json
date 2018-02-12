@@ -1,0 +1,63 @@
+{
+  "sprite" : {
+    "texture" : "scientist.png",
+
+    "animations" : [
+      {
+        "frames" : [
+          [  0, 16, 16, 16],
+          [ 16, 16, 16, 16],
+          [ 32, 16, 16, 16],
+          [ 48, 16, 16, 16]
+        ],
+
+        "time"    : 0.125,
+        "repeat"  : true,
+        "play"    : true
+      },
+      {
+        "frames" : [
+          [ 0, 32, 16, 16],
+          [16, 32, 16, 16]
+        ],
+
+        "time"    : 0.125,
+        "repeat"  : true,
+        "play"    : true
+      },
+      {
+        "frames" : [
+          [32, 32, 16, 16],
+          [48, 32, 16, 16]
+        ],
+
+        "time"    : 0.125,
+        "repeat"  : true,
+        "play"    : true
+      },
+      {
+        "frames" : [
+          [ 0, 0, 16, 16],
+          [16, 0, 16, 16],
+          [32, 0, 16, 16],
+          [48, 0, 16, 16]
+        ],
+
+        "time"    : 0.125,
+        "repeat"  : true,
+        "play"    : true
+      }
+    ]
+  },
+
+  "behavior"  : 1,
+
+  "tileSize"  : 16,
+  "threshold" : 0.25,
+
+  "walkSpeed" : 20.0,
+  "runSpeed"  : 40.0,
+
+  "position"  : [1, 1],
+  "direction" : 0
+}

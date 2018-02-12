@@ -15,6 +15,9 @@
 #include <sstream>
 #include <functional>
 
+#include <json.hpp>
+using Json = nlohmann::json;
+
 const unsigned int kScreenWidth = 480;
 const unsigned int kScreenHeight = 480;
 const std::string kScreenTitle = "Title";

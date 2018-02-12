@@ -18,7 +18,9 @@ void Tilesheet::useTexture(const std::string& name) {
 void Tilesheet::setTileSize(unsigned int tileSize) { mTileSize = tileSize; }
 void Tilesheet::setTilesPerRow(unsigned int tilesPerRow) { mTilesPerRow = tilesPerRow; }
 void Tilesheet::setTileOffset(const sf::Vector2i& offset) { mTileOffset = offset; }
+void Tilesheet::setTileOffset(int x, int y) { setTileOffset({x, y}); }
 void Tilesheet::setTileMargin(const sf::Vector2i& margin) { mTileMargin = margin; }
+void Tilesheet::setTileMargin(int x, int y) { setTileMargin({x, y}); }
 
 const sf::Texture* Tilesheet::getTexture() const { return mTexture; }
 

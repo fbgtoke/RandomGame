@@ -1,60 +1,40 @@
 #include "TilemapReader.hpp"
-
+#include "TilesheetReader.hpp"
 const std::string TilemapReader::kPrefix = "res/tilemaps/";
 
 void TilemapReader::read(Tilemap& tilemap, const std::string& filename) {
   std::ifstream file(kPrefix + filename);
+  
+  std::string content;
+  std::stringstream ss;
+  Json json;
 
   if (file.is_open()) {
-    read(tilemap, file);
+    content.assign( (std::istreambuf_iterator<char>(file) ),
+                    (std::istreambuf_iterator<char>()    ) );
+    
+    ss << content;
+    ss >> json;
+    read(tilemap, json);
+    
     file.close();
   } else {
     std::cout << "Could not load tilemap " << filename << std::endl;
   }
 }
 
-void TilemapReader::read(Tilemap& tilemap, std::ifstream& stream) {
-  std::string line;
-
-  while (getline(stream, line)) {
-    if (line.find("tilesheet") != std::string::npos) readTilesheet(tilemap, stream);
-    else if (line.find("size") != std::string::npos) readSize(tilemap, line);
-    else if (line.find("tiles") != std::string::npos) readTiles(tilemap, stream);
-    else if (line.find("permissions") != std::string::npos) readPermissions(tilemap, stream);
+void TilemapReader::read(Tilemap& tilemap, const Json& json) {
+  if (json.count("tilesheet") != 0) {
+    Json child = json.at("tilesheet");
+    TilesheetReader::read(tilemap.getTilesheet(), child);
   }
-}
 
-void TilemapReader::readTilesheet(Tilemap& tilemap, std::ifstream& stream) {
-  TilesheetReader::read(tilemap.getTilesheet(), stream);
-}
+  if (json.count("size") != 0)
+    tilemap.create(json.at("size")[0], json.at("size")[0]);
 
-void TilemapReader::readSize(Tilemap& tilemap, const std::string& line) {
-  std::stringstream stream(line);
-  std::string command;
-  unsigned int width;
-  unsigned int height;
+  if (json.count("tiles") != 0)
+    tilemap.setTiles(json.at("tiles"));
 
-  stream >> command >> width >> height;
-
-  tilemap.create(width, height);
-}
-
-void TilemapReader::readTiles(Tilemap& tilemap, std::ifstream& stream) {
-  unsigned int value;
-  for (unsigned int i = 0; i < tilemap.getHeight(); ++i) {
-    for (unsigned int j = 0; j < tilemap.getWidth(); ++j) {
-      stream >> value;
-      tilemap.setTile(j, i, value);
-    }
-  }
-}
-
-void TilemapReader::readPermissions(Tilemap& tilemap, std::ifstream& stream) {
-  unsigned int value;
-  for (unsigned int i = 0; i < tilemap.getHeight(); ++i) {
-    for (unsigned int j = 0; j < tilemap.getWidth(); ++j) {
-      stream >> value;
-      tilemap.setPermission(j, i, value);
-    }
-  }
+  if (json.count("permissions") != 0)
+    tilemap.setPermissions(json.at("permissions"));
 }

@@ -13,7 +13,10 @@ public:
   void loadFromFile(const std::string& filename);
 
   void setTile(unsigned int x, unsigned int y, unsigned int value);
+  void setTiles(const std::vector<std::vector<unsigned int>>& tiles);
+  
   void setPermission(unsigned int x, unsigned int y, unsigned int value);
+  void setPermissions(const std::vector<std::vector<unsigned int>>& permissions);
 
   unsigned int getWidth() const;
   unsigned int getHeight() const;

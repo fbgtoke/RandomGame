@@ -5,35 +5,40 @@ const std::string AnimatedSpriteReader::kPrefix = "res/animations/";
 void AnimatedSpriteReader::read(AnimatedSprite* sprite, const std::string& filename) {
   std::ifstream file(kPrefix + filename);
 
+  std::string content;
+  std::stringstream ss;
+  Json json;
+
   if (file.is_open()) {
-    read(sprite, file);
+    content.assign( (std::istreambuf_iterator<char>(file) ),
+                    (std::istreambuf_iterator<char>()    ) );
+    
+    ss << content;
+    ss >> json;
+    read(sprite, json);
+
     file.close();
   } else {
-    std::cout << "Could not load animated sprite " << filename << std::endl;
+    std::cout << "Could not load sprite " << filename << std::endl;
   }
 }
 
-void AnimatedSpriteReader::read(AnimatedSprite* sprite, std::ifstream& stream) {
+void AnimatedSpriteReader::read(AnimatedSprite* sprite, const Json& json) {
   std::string line;
 
-  while (getline(stream, line)) {
-    if (line.find("animation") != std::string::npos) readAnimation(sprite, stream);
-    else if (line.find("texture") != std::string::npos) readTexture(sprite, line);
+  if (json.count("texture") != 0) {
+    std::string textureName = json.at("texture");
+    sf::Texture* texture = getResource().texture(textureName);
+    sprite->setTexture(*texture);
   }
-}
 
-void AnimatedSpriteReader::readAnimation(AnimatedSprite* sprite, std::ifstream& stream) {
-  sprite->addAnimation();
-  AnimationReader::read(sprite->getAnimation(sprite->getNumberOfAnimations()-1), stream);
-}
+  if (json.count("animations") != 0) {
+    std::vector<Json> animations = json.at("animations");
+    for (unsigned int i = 0; i < animations.size(); ++i) {
+      Json child = animations[i];
 
-void AnimatedSpriteReader::readTexture(AnimatedSprite* sprite, const std::string& line) {
-  std::stringstream stream(line);
-  std::string command;
-  std::string textureName;
-  
-  stream >> command >> textureName;
-
-  sf::Texture* texture = getResource().texture(textureName);
-  sprite->setTexture(*texture);
+      sprite->addAnimation();
+      AnimationReader::read(sprite->getAnimation(i), child);
+    }
+  }
 }

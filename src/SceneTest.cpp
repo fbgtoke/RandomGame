@@ -16,7 +16,7 @@ void SceneTest::init() {
 
   for (int i = 0; i < 5; ++i) {
     Character* character = new Character();
-    character->loadFromFile("scientist.char");
+    character->loadFromFile("scientist.json");
     character->init();
     character->setPositionInTiles({i + 1, 1});
     mCharacters.push_back(character);

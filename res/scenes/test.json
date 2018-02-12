@@ -1,0 +1,73 @@
+{
+  "tilemap" : {
+    "tilesheet" : {
+      "texture"     : "tilesheet-pokemon.png",
+      "tileSize"    : 16,
+      "tilesPerRow" : 8,
+      "tileOffset"  : [0, 0],
+      "tileMargin"  : [0, 0]
+    },
+    
+    "size" : [10, 10],
+    
+    "tiles" : [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+      2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+      3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+      4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+      5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+      6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+      7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
+      8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+      9, 9, 9, 9, 9, 9, 9, 9, 9, 9
+    ],
+    
+    "permissions" : [
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+    ]
+  },
+
+  "characters" : [
+    {
+      "animation" : "character.anim",
+      "texture"   : "scientist.png",
+
+      "behavior"  : 1,
+
+      "tileSize"  : 16.0,
+      "threshold" : 0.25,
+
+      "walkSpeed" : 20.0,
+      "runSpeed"  : 40.0,
+
+      "position"  : [1, 1],
+      "direction" : 0
+    },
+
+    {
+      "animation" : "character.anim",
+      "texture"   : "scientist.png",
+
+      "behavior"  : 0,
+
+      "tileSize"  : 16.0,
+      "threshold" : 0.25,
+
+      "walkSpeed" : 20.0,
+      "runSpeed"  : 40.0,
+
+      "position"  : [2, 1],
+      "direction" : 0
+    }
+  ]
+}
