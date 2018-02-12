@@ -2,7 +2,11 @@
 
 SceneTest::SceneTest() : Scene() {}
 
-SceneTest::~SceneTest() {}
+SceneTest::~SceneTest() {
+  for (Character* character : mCharacters)
+    delete character;
+  mCharacters.clear();
+}
 
 void SceneTest::init() {
   Scene::init();
@@ -10,8 +14,13 @@ void SceneTest::init() {
 
   mTilemap.loadFromFile("0.map");
 
-  mCharacter.loadFromFile("scientist.char");
-  mCharacter.init();
+  for (int i = 0; i < 5; ++i) {
+    Character* character = new Character();
+    character->loadFromFile("scientist.char");
+    character->init();
+    character->setPositionInTiles({i + 1, 1});
+    mCharacters.push_back(character);
+  }
 }
 
 void SceneTest::event(const sf::Event& event) {
@@ -25,29 +34,45 @@ void SceneTest::event(const sf::Event& event) {
 void SceneTest::update(const sf::Time& deltatime) {
   Scene::update(deltatime);
 
-  Direction direction = mCharacter.getNextDirection();
-  if (direction != NUM_DIRS && canMoveTowards(mCharacter, direction))
-    mCharacter.moveTowards(direction);
+  for (Character* character : mCharacters) {
+    Direction direction = character->getNextDirection();
+    if (direction != NUM_DIRS && canMoveTowards(character, direction))
+      character->moveTowards(direction);
 
-  mCharacter.update(deltatime);
+    character->update(deltatime);
+  }
 }
 
 void SceneTest::draw(sf::RenderTarget& window, sf::RenderStates states) const {
   Scene::draw(window, states);
 
   window.draw(mTilemap);
-  window.draw(mCharacter);
+  
+  for (Character* character : mCharacters)
+    window.draw(*character);
 }
 
 void SceneTest::end() {
   Scene::end();
 
-  mCharacter.end();
+  for (Character* character : mCharacters)
+    character->end();
 }
 
-bool SceneTest::canMoveTowards(const Character& character, Direction direction) const {
-  sf::Vector2i position = character.getPositionInTiles();
+bool SceneTest::canMoveTowards(const Character* character, Direction direction) const {
+  sf::Vector2i position = character->getPositionInTiles();
   position += dir2vec<int>(direction);
 
-  return character.isIdle() && mTilemap.getPermission(position.x, position.y) == 0;
+  return
+    character->isIdle() &&
+    mTilemap.getPermission(position.x, position.y) == 0 &&
+    !characterAtTile(position);
+}
+
+bool SceneTest::characterAtTile(const sf::Vector2i& tile) const {
+  for (Character* character : mCharacters)
+    if (character->getPositionInTiles() == tile)
+      return true;
+
+  return false;
 }

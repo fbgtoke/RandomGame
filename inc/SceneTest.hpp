@@ -19,9 +19,10 @@ public:
 
 private:
   Tilemap mTilemap;
-  Character mCharacter;
+  std::vector<Character*> mCharacters;
 
-  bool canMoveTowards(const Character& character, Direction direction) const;
+  bool canMoveTowards(const Character* character, Direction direction) const;
+  bool characterAtTile(const sf::Vector2i& tile) const;
 };
 
 #endif // _SCENE_TEST_INCLUDE

@@ -58,6 +58,9 @@ void Game::event() {
     while (mWindow.pollEvent(event)) {
       mCurrentScene->event(event);
     }
+
+    if (event.type == sf::Event::Closed)
+      stop();
   }
 }
 
