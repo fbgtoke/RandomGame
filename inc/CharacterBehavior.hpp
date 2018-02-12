@@ -10,7 +10,8 @@ public:
   CharacterBehavior(Character* character);
   virtual ~CharacterBehavior();
   enum Type {
-    Player
+    Player,
+    Random
   };
   static CharacterBehavior* create(Type type, Character* character);
 

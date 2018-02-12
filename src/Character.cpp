@@ -57,6 +57,9 @@ void Character::update(const sf::Time& deltatime) {
 
   mSprite.changeAnimation(mDirection);
   mSprite.update(deltatime);
+
+  if (mBehavior != nullptr)
+    mBehavior->update(deltatime);
 }
 
 void Character::draw(sf::RenderTarget& window, sf::RenderStates states) const {

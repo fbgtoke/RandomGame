@@ -1,7 +1,7 @@
 animatedSprite character.anim
 texture scientist.png
 
-behavior 0
+behavior 1
 
 tileSize  16.0
 threshold 0.25
