@@ -105,6 +105,8 @@ CharacterBehavior* Character::getBehavior() { return mBehavior; }
 
 void Character::setRunning(bool run) { mRunning = run; }
 
+sf::Vector2f Character::getPosition() const { return mSprite.getPosition(); }
+
 void Character::setPositionInTiles(const sf::Vector2i& position) {
   sf::Vector2f pos(position.x, position.y);
   mSprite.setPosition(pos * mTileSize);

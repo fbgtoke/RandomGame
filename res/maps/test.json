@@ -40,12 +40,33 @@
   "characters" : [
     {
       "file" : "scientist.json",
-      "behavior" : 1
+      "behavior" : 1,
+      "position" : [ 1, 1]
     },
 
     {
       "file" : "scientist.json",
-      "behavior" : 0
+      "behavior" : 1,
+      "position" : [ 1, 2]
+    },
+
+    {
+      "file" : "scientist.json",
+      "behavior" : 1,
+      "position" : [ 1, 3]
+    },
+
+    {
+      "file" : "scientist.json",
+      "behavior" : 1,
+      "position" : [ 1, 4]
+    },
+
+    {
+      "file" : "scientist.json",
+      "behavior"  : 0,
+      "position"  : [ 1, 5],
+      "following" : true
     }
   ]
 }

@@ -1,7 +1,7 @@
 #include "SceneTest.hpp"
 #include "SceneReader.hpp"
 
-SceneTest::SceneTest() : Scene() {}
+SceneTest::SceneTest() : Scene(), mFollowing(nullptr) {}
 
 SceneTest::~SceneTest() {
   for (Character* character : mCharacters)
@@ -12,6 +12,8 @@ SceneTest::~SceneTest() {
 void SceneTest::init() {
   Scene::init();
   getInput().loadFromFile("default.input");
+
+  mView.setSize(kScreenWidth, kScreenHeight);
 
   loadFromFile("test.json");
 }
@@ -40,15 +42,24 @@ void SceneTest::update(const sf::Time& deltatime) {
 
   for (Character* character : mCharacters)
     character->update(deltatime);
+
+  if (mFollowing != nullptr)
+    mView.setCenter(mFollowing->getPosition().x, mFollowing->getPosition().y);
 }
 
 void SceneTest::draw(sf::RenderTarget& window, sf::RenderStates states) const {
   Scene::draw(window, states);
 
+  if (mFollowing != nullptr)
+    window.setView(mView);
+
   window.draw(mTilemap);
   
   for (Character* character : mCharacters)
     window.draw(*character);
+
+  if (mFollowing != nullptr)
+    window.setView(window.getDefaultView());
 }
 
 void SceneTest::end() {
@@ -60,6 +71,10 @@ void SceneTest::end() {
 
 Tilemap& SceneTest::getTilemap() { return mTilemap; }
 std::list<Character*>& SceneTest::getCharacters() { return mCharacters; }
+
+void SceneTest::follow(Character* character) {
+  mFollowing = character;
+}
 
 void SceneTest::loadFromFile(const std::string& filename) {
   SceneReader::read(this, filename);

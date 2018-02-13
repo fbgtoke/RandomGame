@@ -20,11 +20,16 @@ public:
   Tilemap& getTilemap();
   std::list<Character*>& getCharacters();
 
+  void follow(Character* character);
+
   void loadFromFile(const std::string& filename);
 
 private:
   Tilemap mTilemap;
   std::list<Character*> mCharacters;
+
+  sf::View mView;
+  Character* mFollowing;
 
   bool canMoveTowards(const Character* character, Direction direction) const;
   bool characterAtTile(const sf::Vector2i& tile) const;

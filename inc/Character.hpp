@@ -32,6 +32,8 @@ public:
 
   void setRunning(bool run);
 
+  sf::Vector2f getPosition() const;
+
   void setPositionInTiles(const sf::Vector2i& position);
   sf::Vector2i getPositionInTiles() const;
 

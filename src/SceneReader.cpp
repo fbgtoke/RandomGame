@@ -47,6 +47,9 @@ void SceneReader::read(SceneTest* scene, const Json& json) {
 
       CharacterReader::read(character, child);
       characters.push_back(character);
+
+      if (child.count("following") != 0 && child.at("following") == true)
+        scene->follow(character);
     }
   }
 }
