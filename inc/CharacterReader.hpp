@@ -6,8 +6,8 @@
 
 class CharacterReader : public GameObject {
 public:
-  static void read(Character& character, const std::string& filename);
-  static void read(Character& character, const Json& json);
+  static void read(Character* character, const std::string& filename);
+  static void read(Character* character, const Json& json);
 
 private:
   static const std::string kPrefix;

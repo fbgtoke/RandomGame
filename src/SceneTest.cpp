@@ -1,4 +1,5 @@
 #include "SceneTest.hpp"
+#include "SceneReader.hpp"
 
 SceneTest::SceneTest() : Scene() {}
 
@@ -12,15 +13,7 @@ void SceneTest::init() {
   Scene::init();
   getInput().loadFromFile("default.input");
 
-  mTilemap.loadFromFile("0.map");
-
-  for (int i = 0; i < 5; ++i) {
-    Character* character = new Character();
-    character->loadFromFile("scientist.json");
-    character->init();
-    character->setPositionInTiles({i + 1, 1});
-    mCharacters.push_back(character);
-  }
+  loadFromFile("test.json");
 }
 
 void SceneTest::event(const sf::Event& event) {
@@ -57,6 +50,13 @@ void SceneTest::end() {
 
   for (Character* character : mCharacters)
     character->end();
+}
+
+Tilemap& SceneTest::getTilemap() { return mTilemap; }
+std::vector<Character*>& SceneTest::getCharacters() { return mCharacters; }
+
+void SceneTest::loadFromFile(const std::string& filename) {
+  SceneReader::read(this, filename);
 }
 
 bool SceneTest::canMoveTowards(const Character* character, Direction direction) const {

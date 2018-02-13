@@ -75,7 +75,11 @@ void Character::end() {
     mBehavior->end();
 }
 
-void Character::setBehavior(CharacterBehavior* behavior) { mBehavior = behavior; }
+void Character::setBehavior(CharacterBehavior* behavior) {
+  if (mBehavior != nullptr)
+    delete mBehavior;
+  mBehavior = behavior;
+}
 
 void Character::moveTowards(Direction dir) {
   if (mState == Idle) {
@@ -116,5 +120,5 @@ sf::Vector2i Character::getPositionInTiles() const {
 bool Character::isIdle() const { return mState == Idle; }
 
 void Character::loadFromFile(const std::string& filename) {
-  CharacterReader::read(*this, filename);
+  CharacterReader::read(this, filename);
 }

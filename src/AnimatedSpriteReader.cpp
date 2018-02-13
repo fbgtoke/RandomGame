@@ -1,6 +1,6 @@
 #include "AnimatedSpriteReader.hpp"
 
-const std::string AnimatedSpriteReader::kPrefix = "res/animations/";
+const std::string AnimatedSpriteReader::kPrefix = "res/characters/";
 
 void AnimatedSpriteReader::read(AnimatedSprite* sprite, const std::string& filename) {
   std::ifstream file(kPrefix + filename);
@@ -24,7 +24,10 @@ void AnimatedSpriteReader::read(AnimatedSprite* sprite, const std::string& filen
 }
 
 void AnimatedSpriteReader::read(AnimatedSprite* sprite, const Json& json) {
-  std::string line;
+  if (json.count("file") != 0) {
+    std::string filename = json.at("file");
+    read(sprite, filename);
+  }
 
   if (json.count("texture") != 0) {
     std::string textureName = json.at("texture");

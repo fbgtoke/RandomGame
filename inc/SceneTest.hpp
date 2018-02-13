@@ -17,6 +17,11 @@ public:
   void draw(sf::RenderTarget& window, sf::RenderStates states) const override;
   void end() override;
 
+  Tilemap& getTilemap();
+  std::vector<Character*>& getCharacters();
+
+  void loadFromFile(const std::string& filename);
+
 private:
   Tilemap mTilemap;
   std::vector<Character*> mCharacters;

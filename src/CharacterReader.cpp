@@ -3,7 +3,7 @@
 
 const std::string CharacterReader::kPrefix = "res/characters/";
 
-void CharacterReader::read(Character& character, const std::string& filename) {
+void CharacterReader::read(Character* character, const std::string& filename) {
   std::ifstream file(kPrefix + filename);
   
   std::string content;
@@ -24,46 +24,52 @@ void CharacterReader::read(Character& character, const std::string& filename) {
   }
 }
 
-void CharacterReader::read(Character& character, const Json& json) {
+void CharacterReader::read(Character* character, const Json& json) {
+  if (json.count("file") != 0) {
+    std::string filename = json.at("file");
+    read(character, filename);
+  }
+
   if (json.count("sprite") != 0) {
     Json child = json.at("sprite");
-    AnimatedSpriteReader::read(&character.getSprite(), child);
+    AnimatedSpriteReader::read(&character->getSprite(), child);
   }
 
   if (json.count("behavior") != 0) {
     unsigned int type = json.at("behavior");
     CharacterBehavior::Type behaviorType = static_cast<CharacterBehavior::Type>(type);
-    CharacterBehavior* behavior = CharacterBehavior::create(behaviorType, &character);
-    character.setBehavior(behavior);
+    CharacterBehavior* behavior = CharacterBehavior::create(behaviorType, character);
+    behavior->init();
+    character->setBehavior(behavior);
   }
 
   if (json.count("tileSize") != 0) {
     unsigned int tileSize = json.at("tileSize");
-    character.setTileSize(tileSize);
+    character->setTileSize(tileSize);
   }
 
   if (json.count("threshold") != 0) {
     float threshold = json.at("threshold");
-    character.setThreshold(threshold);
+    character->setThreshold(threshold);
   }
 
   if (json.count("walkSpeed") != 0) {
     float walkSpeed = json.at("walkSpeed");
-    character.setWalkSpeed(walkSpeed);
+    character->setWalkSpeed(walkSpeed);
   }
 
   if (json.count("runSpeed") != 0) {
     float runSpeed = json.at("runSpeed");
-    character.setRunSpeed(runSpeed);
+    character->setRunSpeed(runSpeed);
   }
 
   if (json.count("position") != 0) {
     sf::Vector2i position = {json.at("position")[0], json.at("position")[1]};
-    character.setPositionInTiles(position);
+    character->setPositionInTiles(position);
   }
 
   if (json.count("direction") != 0) {
     unsigned int direction = json.at("direction");
-    character.setDirection(static_cast<Direction>(direction));
+    character->setDirection(static_cast<Direction>(direction));
   }
 }
