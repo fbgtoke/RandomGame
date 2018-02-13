@@ -32,7 +32,7 @@ void SceneReader::read(SceneTest* scene, const Json& json) {
   }
 
   if (json.count("characters") != 0) {
-    std::vector<Character*>& characters = scene->getCharacters();
+    std::list<Character*>& characters = scene->getCharacters();
     std::vector<Json> children = json.at("characters");
 
     for (Character* character : characters)

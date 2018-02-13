@@ -27,13 +27,19 @@ void SceneTest::event(const sf::Event& event) {
 void SceneTest::update(const sf::Time& deltatime) {
   Scene::update(deltatime);
 
-  for (Character* character : mCharacters) {
-    Direction direction = character->getNextDirection();
-    if (direction != NUM_DIRS && canMoveTowards(character, direction))
-      character->moveTowards(direction);
+  Character* current = mCharacters.front();
+  if (current != nullptr && current->isIdle()) {
+    Direction direction = current->getNextDirection();
+    if (direction != NUM_DIRS && canMoveTowards(current, direction)) {
+      current->moveTowards(direction);
 
-    character->update(deltatime);
+      mCharacters.erase(mCharacters.begin());
+      mCharacters.push_back(current);
+    }
   }
+
+  for (Character* character : mCharacters)
+    character->update(deltatime);
 }
 
 void SceneTest::draw(sf::RenderTarget& window, sf::RenderStates states) const {
@@ -53,7 +59,7 @@ void SceneTest::end() {
 }
 
 Tilemap& SceneTest::getTilemap() { return mTilemap; }
-std::vector<Character*>& SceneTest::getCharacters() { return mCharacters; }
+std::list<Character*>& SceneTest::getCharacters() { return mCharacters; }
 
 void SceneTest::loadFromFile(const std::string& filename) {
   SceneReader::read(this, filename);

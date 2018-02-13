@@ -18,13 +18,13 @@ public:
   void end() override;
 
   Tilemap& getTilemap();
-  std::vector<Character*>& getCharacters();
+  std::list<Character*>& getCharacters();
 
   void loadFromFile(const std::string& filename);
 
 private:
   Tilemap mTilemap;
-  std::vector<Character*> mCharacters;
+  std::list<Character*> mCharacters;
 
   bool canMoveTowards(const Character* character, Direction direction) const;
   bool characterAtTile(const sf::Vector2i& tile) const;
