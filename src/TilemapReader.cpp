@@ -24,6 +24,11 @@ void TilemapReader::read(Tilemap& tilemap, const std::string& filename) {
 }
 
 void TilemapReader::read(Tilemap& tilemap, const Json& json) {
+  if (json.count("file") != 0) {
+    std::string filename = json.at("file");
+    tilemap.loadFromFile(filename);
+  }
+
   if (json.count("tilesheet") != 0) {
     Json child = json.at("tilesheet");
     TilesheetReader::read(tilemap.getTilesheet(), child);
